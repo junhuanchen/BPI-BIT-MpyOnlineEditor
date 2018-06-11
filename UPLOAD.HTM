@@ -79,7 +79,7 @@
 		function onSetFile(status, content) {
 			if(filename != "") {
 				var dest = document.getElementById("show");
-				client.PUT(BaseDir + filename, dest.innerHTML, wrapContinueHandler(setFile), this, 1);
+				client.PUT(BaseDir + filename, dest.value, wrapContinueHandler(setFile), this, 1);
 			}
 			else {
 				alert('Not Add File!');
