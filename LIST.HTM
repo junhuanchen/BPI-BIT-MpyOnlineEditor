@@ -28,6 +28,21 @@
 			color:#000000;
 			background-color:#EAF2D3;
 		}
+		button {
+			margin-right:10px;
+			padding:8px;
+			background-color: #428bca;
+			border-color: #357ebd;
+			color: #fff;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			border-radius: 10px; /* future proofing */
+			-khtml-border-radius: 10px; /* for old Konqueror browsers */
+			text-align: center;
+			vertical-align: middle;
+			border: 1px solid transparent;
+			font-size:125%
+		}  
 		</style>
 	</head>
 	
@@ -46,7 +61,8 @@
 			<tbody id='tbody'>
 			</tbody>
 		</table>
-			<script type="text/javascript" src="dav.js"></script>
+		
+		<script type="text/javascript" src="dav.js"></script>
 		<script>
 			OutPutDivID = 'list';
 			BaseDir = '/';
@@ -112,7 +128,7 @@
 							// td_filename.innerHTML = file_info.getElementsByTagName("name")[0].innerHTML;
 							td_filename.innerHTML = file_info.firstChild.innerHTML;
 							td_filesize.innerHTML = file_info.getElementsByTagName(flag_file_size)[0].innerHTML;
-							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + '><button>editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>delete</button><a href=/edit.htm?filename=' + td_filename.innerHTML + '><button>edit not net</button></a>';
+							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + '><button>Python Editor</button></a><a href=/edit.htm?filename=' + td_filename.innerHTML + '><button>Text Editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>Delete</button>';
 							
 							tr.appendChild(td_filename);
 							tr.appendChild(td_filesize);
