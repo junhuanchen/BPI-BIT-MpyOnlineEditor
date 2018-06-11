@@ -156,7 +156,7 @@
 	filename = getQueryVariable("filename");
 	
 	var client = new davlib.DavClient();
-	client.initialize(location.hostname, 8080, 'http', 'user', 'password');
+	client.initialize(location.hostname, 80, 'http', 'user', 'password');
 
 	function wrapContinueHandler(handler) {
 		return function(status, statusstr, content) {

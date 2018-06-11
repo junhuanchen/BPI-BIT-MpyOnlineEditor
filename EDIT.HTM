@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>WebDav Text Editor</title>
+</head>
+
+<body onload="RunInit();">
+
+<div id="list">
+	<h2><p align="center"><button onclick="onSave()">Click Save File</button></p></h2>
+</div>
+<div>
+	<textarea id="editor" name="content" style="width:100%;height:500px;visibility: "></textarea>
+</div>
+
+<script type="text/javascript" src="dav.js"></script>
+<script>
+	
+	function getQueryVariable(variable) {
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			if(pair[0] == variable) {
+				return pair[1];
+			}
+		}
+		return(false);
+	}
+	
+	BaseDir = '/';
+	filename = getQueryVariable("filename");
+	
+	var client = new davlib.DavClient();
+	client.initialize(location.hostname, 80, 'http', 'user', 'password');
+
+	function wrapContinueHandler(handler) {
+		return function(status, statusstr, content) {
+			handler(status, content);
+		};
+	};
+	
+	var editor = document.getElementById("editor");
+	
+	function getFile(status, content) {
+		if (status == 200) {
+			editor.innerHTML = content;
+		} else {
+			;
+		};
+	};
+	
+	function setFile(status, content) {
+		if (status == 201) {
+			alert('Save ok');
+		} else {
+			;
+		};
+	};
+	
+	function onSave() {
+		alert('Click Save File');
+		client.PUT(BaseDir + filename, editor.value, wrapContinueHandler(setFile), this, 1);
+	}
+	
+	function RunInit() {
+		client.GET(BaseDir + filename, wrapContinueHandler(getFile), this, 1);
+	}
+
+</script>
+
+</body>
+</html>

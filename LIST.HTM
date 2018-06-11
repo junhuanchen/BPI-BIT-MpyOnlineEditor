@@ -29,13 +29,30 @@
 			background-color:#EAF2D3;
 		}
 		</style>
-		<script type="text/javascript" src="dav.js"></script>
+	</head>
+	
+	<body onload="RunInit();">
+		<div id="list">
+			<h2><p align="center"><a href="/upload.htm"> Upload New File </a></p></h2>
+		</div>
+		<table id="customers">
+			<thead>
+				<tr>
+				<th>FileName</th>
+				<th>FileSize</th>
+				<th>Operator</th>
+				</tr>
+			</thead>
+			<tbody id='tbody'>
+			</tbody>
+		</table>
+			<script type="text/javascript" src="dav.js"></script>
 		<script>
 			OutPutDivID = 'list';
 			BaseDir = '/';
 			
 			var client = new davlib.DavClient();
-			client.initialize(location.hostname, 8080, 'http', 'user', 'password');
+			client.initialize(location.hostname, 80, 'http', 'user', 'password');
 
 			function writeToDiv(line, emphasize) {
 				var div = document.getElementById(OutPutDivID);
@@ -73,25 +90,29 @@
 						if (window.DOMParser) {
 							parser = new DOMParser();
 							doc = parser.parseFromString(string.deentitize(content), "application/xml");
+							set = doc.getElementsByTagName("d:response");
+							flag_file_size = "d:getcontentlength"
 						} else { // Internet Explorer :-)
 							doc = new ActiveXObject("Microsoft.XMLDOM");
 							doc.loadXML(content);
+							set = doc.getElementsByTagName("response");
+							flag_file_size = "getcontentlength"
 						}
-						
-						for (i = 1; i < doc.getElementsByTagName("response").length; i++) {
-							var file_info = doc.getElementsByTagName("response")[i];
+				
+						// console.log(doc);
+						for (i = 1; i < set.length; i++) {
+							var file_info = set[i];
 							// console.log(file_info);
 							
 							var tr = document.createElement('tr');
-							
 							var td_filename = document.createElement('td');
 							var td_filesize = document.createElement('td');
 							var td_operator = document.createElement('td');
 							
-							<!-- td_filename.innerHTML = file_info.getElementsByTagName("name")[0].innerHTML; -->
+							// td_filename.innerHTML = file_info.getElementsByTagName("name")[0].innerHTML;
 							td_filename.innerHTML = file_info.firstChild.innerHTML;
-							td_filesize.innerHTML = file_info.getElementsByTagName("getcontentlength")[0].innerHTML;
-							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + '><button>editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>delete</button>';
+							td_filesize.innerHTML = file_info.getElementsByTagName(flag_file_size)[0].innerHTML;
+							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + '><button>editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>delete</button><a href=/edit.htm?filename=' + td_filename.innerHTML + '><button>edit not net</button></a>';
 							
 							tr.appendChild(td_filename);
 							tr.appendChild(td_filesize);
@@ -159,22 +180,5 @@
 			
 		</script>
 		
-	</head>
-	
-	<body onload="RunInit();">
-		<div id="list">
-			<h2><p align="center"><a href="/upload.htm"> Upload New File </a></p></h2>
-		</div>
-		<table id="customers">
-			<thead>
-				<tr>
-				<th>FileName</th>
-				<th>FileSize</th>
-				<th>Operator</th>
-				</tr>
-			</thead>
-			<tbody id='tbody'>
-			</tbody>
-		</table>
 	</body>
 </html>

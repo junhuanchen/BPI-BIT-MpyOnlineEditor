@@ -30,14 +30,34 @@
 			color:#000000;
 			background-color:#EAF2D3;
 		}
-		</style>
+	</style>
+</head>
+<body>
+	<h1>将代码拖入如下区域预览后点击上传按钮即可</h1>
+	<textarea id="show" name="content" style="width:100%;height:200px;visibility: "></textarea>
+	
+	<table id="customers">
+		<thead>
+			<tr>
+			<th>FileName</th>
+			<th>FileSize</th>
+			<th>Operator</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td id="filename">无</td>
+			<td id="filesize">无</td>
+			<td><button onclick="onSetFile()"> Upload </button></td>
+	</table>
+	
 	<script type="text/javascript" src="dav.js"></script>
 	<script type="text/javascript">
 		BaseDir = '/';
 		filename = "";
 		
 		var client = new davlib.DavClient();
-		client.initialize(location.hostname, 8080, 'http', 'user', 'password');
+		client.initialize(location.hostname, 80, 'http', 'user', 'password');
 
 		function wrapContinueHandler(handler) {
 			return function(status, statusstr, content) {
@@ -47,8 +67,10 @@
 		
 		function setFile(status, content) {
 			if (status == 201) {
-				window.location.href="/editor.htm?filename=" + filename;
+				alert('Upload File OK!');
+				// window.location.href="/editor.htm?filename=" + filename;
 				// window.open("http://www.baidu.com");
+				location.reload();
 			} else {
 				;
 			};
@@ -115,25 +137,6 @@
 		
 		window.onload=init;
 	</script>
-</head>
-<body>
-	<h1>将代码拖入如下区域预览后点击上传按钮即可</h1>
-	<textarea id="show" name="content" style="width:100%;height:200px;visibility: "></textarea>
-	
-	<table id="customers">
-		<thead>
-			<tr>
-			<th>FileName</th>
-			<th>FileSize</th>
-			<th>Operator</th>
-			</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td id="filename">无</td>
-			<td id="filesize">无</td>
-			<td><button onclick="onSetFile()"> Upload </button></td>
-	</table>
 
 </body>
 </html>
