@@ -48,7 +48,7 @@
 	
 	<body onload="RunInit();">
 		<div id="list">
-			<h2><p align="center"><a href="/upload.htm"> Upload New File </a></p></h2>
+			<h2><p align="center"><a href="/upload.htm" target="_blank"> Upload New File </a></p></h2>
 		</div>
 		<table id="customers">
 			<thead>
@@ -125,10 +125,12 @@
 							var td_filesize = document.createElement('td');
 							var td_operator = document.createElement('td');
 							
+							if(-1 == file_info.firstChild.innerHTML.indexOf(".PY")) continue; // filter not py file 							
+							
 							// td_filename.innerHTML = file_info.getElementsByTagName("name")[0].innerHTML;
 							td_filename.innerHTML = file_info.firstChild.innerHTML;
 							td_filesize.innerHTML = file_info.getElementsByTagName(flag_file_size)[0].innerHTML;
-							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + '><button>Python Editor</button></a><a href=/edit.htm?filename=' + td_filename.innerHTML + '><button>Text Editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>Delete</button>';
+							td_operator.innerHTML = '<a href=/editor.htm?filename=' + td_filename.innerHTML + ' target="_blank"><button>Python Editor</button></a><a href=/edit.htm?filename=' + td_filename.innerHTML + ' target="_blank"><button>Text Editor</button></a><button onclick=onDelFile("' + td_filename.innerHTML + '")>Delete</button>';
 							
 							tr.appendChild(td_filename);
 							tr.appendChild(td_filesize);
